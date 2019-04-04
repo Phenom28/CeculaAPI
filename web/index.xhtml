@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="/template.xhtml">
+    
+    <ui:define name="head">
+        <title>Index</title>
+    </ui:define>
+    
+    <ui:define name="head-end">
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </ui:define>
+    
+    <ui:define name="body">
+        Hello from Facelets
+        <br />
+        <h:link outcome="/appsTable/List" value="Show All AppsTable Items"/>
+        <br />
+        <h:link outcome="/usersTable/List" value="Show All UsersTable Items"/>
+    </ui:define>
+
+</ui:composition>
+

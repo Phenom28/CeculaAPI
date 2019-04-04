@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template.xhtml">
+
+    <ui:define name="head">
+        <title>
+            <h:outputText value="#{bundle.ListUsersTableTitle}"></h:outputText>
+        </title>
+    </ui:define>
+    
+    <ui:define name="head-end">
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="UsersTableListForm">
+            <p:panel header="#{bundle.ListUsersTableTitle}">
+                <p:dataTable id="datalist" value="#{usersTableController.users}" var="user"
+                             selectionMode="single" selection="#{usersTableController.selected}"
+                             paginator="true"
+                             rowKey="#{user.id}"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             >
+
+                    <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsersTableTitle_id}"/>
+                        </f:facet>
+                        <h:outputText value="#{user.id}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsersTableTitle_email}"/>
+                        </f:facet>
+                        <h:outputText value="#{user.email}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsersTableTitle_username}"/>
+                        </f:facet>
+                        <h:outputText value="#{user.username}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsersTableTitle_password}"/>
+                        </f:facet>
+                        <h:outputText value="#{user.password}"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{usersTableController.prepareCreate}" update=":UsersTableCreateForm" oncomplete="PF('UsersTableCreateDialog').show()"/>
+                        <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":UsersTableViewForm" oncomplete="PF('UsersTableViewDialog').show()" disabled="#{empty usersTableController.selected}"/>
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":UsersTableEditForm" oncomplete="PF('UsersTableEditDialog').show()" disabled="#{empty usersTableController.selected}"/>
+                        <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{usersTableController.destroy}" update=":growl,datalist" disabled="#{empty usersTableController.selected}"/>
+                    </f:facet>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+
+        <ui:include src="Create.xhtml"/>
+        <ui:include src="Edit.xhtml"/>
+        <ui:include src="View.xhtml"/>
+    </ui:define>
+</ui:composition>
