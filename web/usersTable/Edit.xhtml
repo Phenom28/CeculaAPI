@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+        <p:dialog id="UsersTableEditDlg" widgetVar="UsersTableEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUsersTableTitle}">
+            <h:form id="UsersTableEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usersTableController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditUsersTableLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{usersTableController.selected.email}" title="#{bundle.EditUsersTableTitle_email}" required="true" requiredMessage="#{bundle.EditUsersTableRequiredMessage_email}"/>
+                        <p:outputLabel value="#{bundle.EditUsersTableLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{usersTableController.selected.username}" title="#{bundle.EditUsersTableTitle_username}" required="true" requiredMessage="#{bundle.EditUsersTableRequiredMessage_username}"/>
+                        <p:outputLabel value="#{bundle.EditUsersTableLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{usersTableController.selected.password}" title="#{bundle.EditUsersTableTitle_password}" required="true" requiredMessage="#{bundle.EditUsersTableRequiredMessage_password}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usersTableController.update}" value="#{bundle.Save}" update="display,:UsersTableListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsersTableEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UsersTableEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>

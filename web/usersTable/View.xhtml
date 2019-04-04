@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog id="UsersTableViewDlg" widgetVar="UsersTableViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewUsersTableTitle}">
+        <h:form id="UsersTableViewForm">
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" rendered="#{usersTableController.selected != null}">
+                    <h:outputText value="#{bundle.ViewUsersTableLabel_id}"/>
+                    <h:outputText value="#{usersTableController.selected.id}" title="#{bundle.ViewUsersTableTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewUsersTableLabel_email}"/>
+                    <h:outputText value="#{usersTableController.selected.email}" title="#{bundle.ViewUsersTableTitle_email}"/>
+                    <h:outputText value="#{bundle.ViewUsersTableLabel_username}"/>
+                    <h:outputText value="#{usersTableController.selected.username}" title="#{bundle.ViewUsersTableTitle_username}"/>
+                    <h:outputText value="#{bundle.ViewUsersTableLabel_password}"/>
+                    <h:outputText value="#{usersTableController.selected.password}" title="#{bundle.ViewUsersTableTitle_password}"/>
+                </p:panelGrid>
+                <p:commandButton value="#{bundle.Close}" onclick="PF('UsersTableViewDialog').hide()"/>
+            </h:panelGroup>
+        </h:form>
+    </p:dialog>
+
+</ui:composition>
