@@ -1,6 +1,7 @@
 package com.cecula.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,29 +29,37 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "UsersTable.findAll", query = "SELECT u FROM Users u")
     , @NamedQuery(name = "UsersTable.findById", query = "SELECT u FROM Users u WHERE u.id = :id")
     , @NamedQuery(name = "UsersTable.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email")})
-public class Users implements Serializable {
+public class Users {
 
-    private static final long serialVersionUID = -7674347195490186283L;
+//    private static final long serialVersionUID = -7674347195490186283L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
+    @Basic(optional = false)
+    @Column(name = "firstname")
+    private String firstname;
+
+    @Basic(optional = false)
+    @Column(name = "lastname")
+    private String lastname;
+
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
-    
+
     @Basic(optional = false)
     @Column(name = "username")
     private String username;
-    
+
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
     private List<UsersHasApps> usersHasApps;
 
@@ -60,8 +70,10 @@ public class Users implements Serializable {
         this.id = id;
     }
 
-    public Users(Integer id, String email, String username, String password) {
+    public Users(Integer id, String firstname, String lastname, String email, String username, String password) {
         this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.username = username;
         this.password = password;
@@ -73,6 +85,22 @@ public class Users implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -128,5 +156,5 @@ public class Users implements Serializable {
     public String toString() {
         return email;
     }
-    
+
 }
